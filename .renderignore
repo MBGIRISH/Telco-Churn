@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Data files (large)
+data/*.csv
+data/*.db
+!data/.gitkeep
+
+# Models (will be generated on first run)
+models/*.pkl
+models/*.pth
+!models/.gitkeep
+
+# Notebooks
+notebooks/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Documentation
+*.md
+!README.md
+
+# React/TypeScript (if not using)
+node_modules/
+dist/
+build/
+

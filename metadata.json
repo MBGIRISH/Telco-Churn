@@ -1,5 +1,0 @@
-{
-  "name": "Telco Churn AI",
-  "description": "An intelligent Customer Churn Prediction System featuring interactive dashboards, real-time AI predictions using Gemini, and data exploration tools.",
-  "requestFramePermissions": []
-}

@@ -1,0 +1,15 @@
+{
+    "initial_rows": 7043,
+    "initial_columns": 21,
+    "duplicates_removed": 0,
+    "missing_values_handled": {
+        "TotalCharges": 11
+    },
+    "outliers_removed": 0,
+    "type_conversions": [
+        "SeniorCitizen -> int",
+        "tenure -> int"
+    ],
+    "final_rows": 7043,
+    "final_columns": 21
+}

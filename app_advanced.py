@@ -118,6 +118,29 @@ use_pytorch = st.sidebar.checkbox("Use PyTorch Model", value=False)
 def load_ml_model_cached(model_name):
     try:
         return load_model_and_preprocessors(model_name)
+    except FileNotFoundError as e:
+        error_msg = str(e)
+        st.error(f"❌ Model not found: {error_msg}")
+        st.warning("""
+        **Models are missing!** 
+        
+        To fix this on Render:
+        
+        1. **Option A - Train on Render** (Add to build command):
+           ```bash
+           pip install -r requirements.txt && python train_models_on_render.py
+           ```
+        
+        2. **Option B - Upload models to GitHub**:
+           - Train models locally: `python src/model_training.py`
+           - Commit models to GitHub
+           - Redeploy on Render
+        
+        3. **Option C - Use Render Shell**:
+           - Go to Render dashboard → Your service → Shell
+           - Run: `python src/model_training.py`
+        """)
+        return None, None, None, None
     except Exception as e:
         st.error(f"Error loading ML model: {e}")
         return None, None, None, None

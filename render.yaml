@@ -4,7 +4,7 @@ services:
     name: telco-churn-streamlit
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python train_models_on_render.py || echo "Models will be trained on first run"
     startCommand: streamlit run app_advanced.py --server.port=$PORT --server.address=0.0.0.0
     envVars:
       - key: PYTHON_VERSION

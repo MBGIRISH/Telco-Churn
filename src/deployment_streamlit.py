@@ -24,7 +24,16 @@ def load_model_and_preprocessors(model_name: str = "xgboost"):
     Returns:
         Tuple of (model, scaler, label_encoder, feature_names)
     """
-    project_root = Path(__file__).parent.parent
+    # Get project root - handle both local and Render paths
+    current_file = Path(__file__)
+    if current_file.parent.name == "src":
+        project_root = current_file.parent.parent
+    else:
+        # Fallback: try to find project root
+        project_root = Path.cwd()
+        if not (project_root / "models").exists():
+            project_root = project_root.parent
+    
     models_dir = project_root / "models"
     
     # Try to load tuned model first
@@ -32,11 +41,28 @@ def load_model_and_preprocessors(model_name: str = "xgboost"):
     if not model_path.exists():
         model_path = models_dir / f"{model_name}.pkl"
     
+    # Try alternative locations
     if not model_path.exists():
-        raise FileNotFoundError(f"Model not found: {model_path}")
+        # Try in current directory
+        alt_path = Path("models") / f"{model_name}.pkl"
+        if alt_path.exists():
+            model_path = alt_path
+            models_dir = Path("models")
+    
+    if not model_path.exists():
+        raise FileNotFoundError(
+            f"Model not found: {model_path}\n"
+            f"Please train models first by running: python src/model_training.py\n"
+            f"Or ensure models are uploaded to the models/ directory."
+        )
     
     scaler_path = models_dir / "scaler.pkl"
     label_encoder_path = models_dir / "label_encoder.pkl"
+    
+    if not scaler_path.exists():
+        raise FileNotFoundError(f"Scaler not found: {scaler_path}")
+    if not label_encoder_path.exists():
+        raise FileNotFoundError(f"Label encoder not found: {label_encoder_path}")
     
     model = joblib.load(model_path)
     scaler = joblib.load(scaler_path)
